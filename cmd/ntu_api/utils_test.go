@@ -12,8 +12,8 @@ func TestInvalidDate(t *testing.T) {
 		switch err.(type) {
 		case nil:
 			t.Errorf("wanted error got nil")
-		case *DateRangeError:
-			t.Errorf("wanted %T got %T", &NullDateError{}, err)
+		case *ErrDateRange:
+			t.Errorf("wanted %T got %T", &ErrNullDate{}, err)
 		}
 	})
 
@@ -22,8 +22,8 @@ func TestInvalidDate(t *testing.T) {
 		switch err.(type) {
 		case nil:
 			t.Errorf("wanted error got nil")
-		case *NullDateError:
-			t.Errorf("wanted %T got %T", &DateRangeError{}, err)
+		case *ErrNullDate:
+			t.Errorf("wanted %T got %T", &ErrDateRange{}, err)
 		}
 	})
 
