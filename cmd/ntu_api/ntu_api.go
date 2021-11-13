@@ -17,17 +17,22 @@ func New(config Config) *NTUApi {
 	return &NTUApi{config, time.Time{}, time.Time{}}
 }
 
-//GetCurrentWeek returns the current academic week based on the start date.
-//-1 with the appropriate error is returned when start_date is not initialized.
+//GetWeek returns the current academic week based on the start date and target date
+//-1 with the appropriate error if validation check fails
 //Use UpdateStartDate() to initialize start_date.
-func (ntu *NTUApi) GetCurrentWeek(currentDay time.Time) (int, error) {
-	err := validateDate(ntu.startDate, time.Now())
+func (ntu *NTUApi) GetWeek(targetDate time.Time) (int, error) {
+	err := validateDate(ntu.startDate, targetDate)
 	if err != nil {
 		return -1, err
 	}
 
 	//to add logic here.
 	return 0, nil
+}
+
+//GetCurrentWeek calls GetWeek() with current date.
+func (ntu *NTUApi) GetCurrentWeek() (int, error) {
+	return ntu.GetWeek(time.Now())
 }
 
 func (ntu *NTUApi) UpdateStartDate(startDate time.Time) {
