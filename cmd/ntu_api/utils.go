@@ -27,3 +27,13 @@ func validateDate(startDate, targetDate time.Time) error {
 
 	return nil
 }
+
+//calculateWeek gets the week number of target date, if the start date's week number is 1
+//this function is not tied to the context of NTU academic week. it may even return negative.
+//no validation checks here.
+func calculateWeek(startDate, targetDate time.Time) int {
+	_, start_week := startDate.ISOWeek()
+	_, target_week := targetDate.ISOWeek()
+
+	return target_week - start_week + 1
+}

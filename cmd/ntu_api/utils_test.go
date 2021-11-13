@@ -46,14 +46,25 @@ func TestInvalidDate(t *testing.T) {
 	})
 }
 
-func TestValidDate(t *testing.T) {
-	//logic harder to test as time is relative to current time. if test passes now it might fail later.
-	_ = []struct {
+func TestCalculateWeek(t *testing.T) {
+	sample := time.Date(2021, time.August, 9, 0, 0, 0, 0, time.Local) //this sample follows 21/22 Sem 1 start-date.
+
+	tests := []struct {
 		startDate  time.Time
 		targetDate time.Time
+		want       int
 	}{
-		{},
-		{},
-		{},
+		{sample, sample.AddDate(0, 0, 7), 2},
+		{sample, sample.AddDate(0, 0, 3), 1},
+		{sample, sample.AddDate(0, 1, 0), 5},
+		{sample, sample.AddDate(0, 3, 0), 14}, //should return 14, even though it is teaching week 13, due to week 7 being recess week (but not a teaching week)
+	}
+
+	for idx, test := range tests {
+		got := calculateWeek(test.startDate, test.targetDate)
+		if got != test.want {
+			t.Errorf("test case %d: wanted week %d got week %d <start_date: %s> <target_date: %s>", idx, test.want, got,
+				test.startDate.Format(TIMEFORMAT), test.targetDate.Format(TIMEFORMAT))
+		}
 	}
 }

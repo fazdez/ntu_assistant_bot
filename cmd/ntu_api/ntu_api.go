@@ -26,8 +26,7 @@ func (ntu *NTUApi) GetWeek(targetDate time.Time) (int, error) {
 		return -1, err
 	}
 
-	//to add logic here.
-	return 0, nil
+	return calculateWeek(ntu.startDate, targetDate), nil
 }
 
 //GetCurrentWeek calls GetWeek() with current date.
